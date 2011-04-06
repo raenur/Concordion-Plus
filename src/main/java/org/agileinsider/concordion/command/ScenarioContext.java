@@ -10,8 +10,8 @@ public class ScenarioContext {
     private static final String ROOT_OBJECT_FIELD_NAME = "rootObject";
     private static final String OGNL_CONTEXT_FIELD_NAME = "ognlContext";
 
-    private static Field ROOT_OBJECT_FIELD;
-    private static Field OGNL_CONTEXT_FIELD;
+    private static final Field ROOT_OBJECT_FIELD;
+    private static final Field OGNL_CONTEXT_FIELD;
 
     private ScenarioContext parentContext = null;
     private Object rootObject = null;
@@ -22,11 +22,11 @@ public class ScenarioContext {
         try {
             ROOT_OBJECT_FIELD = OgnlEvaluator.class.getDeclaredField(ROOT_OBJECT_FIELD_NAME);
             OGNL_CONTEXT_FIELD = OgnlEvaluator.class.getDeclaredField(OGNL_CONTEXT_FIELD_NAME);
+            ROOT_OBJECT_FIELD.setAccessible(true);
+            OGNL_CONTEXT_FIELD.setAccessible(true);
         } catch (NoSuchFieldException e) {
             throw new IllegalStateException("Don't seem to be able to access the fields in concordion using reflection!!!");
         }
-        ROOT_OBJECT_FIELD.setAccessible(true);
-        OGNL_CONTEXT_FIELD.setAccessible(true);
     }
 
     public ScenarioContext() {

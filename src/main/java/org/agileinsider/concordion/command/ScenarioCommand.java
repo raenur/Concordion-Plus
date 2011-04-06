@@ -29,7 +29,6 @@ public class ScenarioCommand extends AbstractCommand {
     public void setUp(CommandCall commandCall, Evaluator evaluator, ResultRecorder resultRecorder) {
         String scenarioName = commandCall.getExpression();
         startScenarioContext(scenarioName, evaluator);
-        super.setUp(commandCall, evaluator, scenarioContext.getResultRecorder());
     }
 
     @Override
@@ -41,7 +40,6 @@ public class ScenarioCommand extends AbstractCommand {
     public void verify(CommandCall commandCall, Evaluator evaluator, ResultRecorder resultRecorder) {
         String scenarioName = commandCall.getExpression();
         ScenarioResultRecorder scenarioResults = scenarioContext.getResultRecorder();
-        super.verify(commandCall, evaluator, scenarioResults);
 
         if (scenarioResults.getExceptionCount() > 0) {
             announceError(scenarioName, commandCall.getElement(), new AssertionFailedError("Scenario has errors."));
