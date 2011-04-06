@@ -1,0 +1,56 @@
+<html xmlns:c="http://www.concordion.org/2007/concordion">
+<link href="../../../../concordion.css" rel="stylesheet" type="text/css"/>
+<body>
+
+<h1>Continue After Ignored Section</h1>
+
+<div class="example">
+    <h3>Multiple Scenarios</h3>
+
+    <p>When the Concordion Plus Extension is installed that adds the <code>scenario</code>and <code>ignore</code>
+        commands in the <code>http://www.agileinsider.org/concordion/plus</code> namespace.
+        This command should be able to process many scenarios.</p>
+
+    <p>Running a specification containing: </p>
+<pre c:execute="process(#TEXT)">
+&lt;div xmlns:cp="http://www.agileinsider.org/concordion/plus" xmlns:c="http://www.concordion.org/2007/concordion"&gt;
+    &lt;p cp:ignore="work in progress"&gt;
+        &lt;span c:execute="nonExistantMethod()"&gt;Should not try to execute.&lt;/span&gt;
+    &lt;/p&gt;
+    &lt;p cp:scenario="Passing Scenario"&gt;Inside Scenario&lt;/p&gt;
+    &lt;p cp:scenario="Error Scenario"&gt;
+        Should get an &lt;span c:execute="anotherNonExistingMethod()"&gt;Exception&lt;/span&gt;
+    &lt;/p&gt;
+    &lt;p cp:scenario="Another Passing Scenario"&gt;Inside Another Scenario&lt;/p&gt;
+    &lt;p cp:scenario="Failing Scenario"&gt;
+        Should get a &lt;span c:assertEquals="getText()"&gt;failure&lt;/span&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+</pre>
+
+    <p>Should produce the following results:</p>
+    <table>
+        <tr>
+            <th>Result</th>
+        </tr>
+        <tr>
+            <td c:assertEquals="outputContains(#TEXT)">&lt;p cp:ignore="work in progress" class="skip"&gt;</td>
+        </tr>
+        <tr>
+            <td c:assertEquals="outputContains(#TEXT)">&lt;p cp:scenario="Passing Scenario" class="pass"&gt;</td>
+        </tr>
+        <tr>
+            <td c:assertEquals="outputContains(#TEXT)">&lt;p cp:scenario="Error Scenario" class="error"&gt;</td>
+        </tr>
+        <tr>
+            <td c:assertEquals="outputContains(#TEXT)">&lt;p cp:scenario="Another Passing Scenario" class="pass"&gt;</td>
+        </tr>
+        <tr>
+            <td c:assertEquals="outputContains(#TEXT)">&lt;p cp:scenario="Failing Scenario" class="fail"&gt;</td>
+        </tr>
+    </table>
+
+</div>
+
+</body>
+</html>

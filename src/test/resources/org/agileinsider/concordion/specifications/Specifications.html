@@ -1,0 +1,36 @@
+<html xmlns:c="http://www.concordion.org/2007/concordion">
+<link href="../../../../concordion.css" rel="stylesheet" type="text/css"/>
+<body>
+
+<h1>Concordion Plus Specifications</h1>
+
+<div class="example">
+    <ul>
+        <li><a c:run="concordion" href="CssStyles.html">CSS Styles</a> should be included in the outputs.</li>
+        <li><a c:run="concordion" href="SuccessfulScenario.html">Successful scenarios</a> should result in the scenario
+            being classified as "pass".
+        </li>
+        <li><a c:run="concordion" href="FailureScenario.html">Failing scenarios</a> should result in the scenario being
+            classified as "fail".
+        </li>
+        <li><a c:run="concordion" href="ErrorScenario.html">Errors in scenarios</a> should result in the scenario being
+            classified as "error".
+        </li>
+        <li><a c:run="concordion" href="IgnoredSection.html">Ignored sections</a> should result in the scenario being
+            classified as "skip".
+        </li>
+        <li><a c:run="concordion" href="MultipleScenarios.html">Should be able to process multiple scenarios</a>.</li>
+        <li><a c:run="concordion" href="ContinueAfterIgnoredSection.html">After encountering an Ignored section</a>
+            other scenarios should still run.
+        </li>
+        <li><a c:run="concordion" href="ContinueAfterFailedScenario.html">After encountering a Failing scenario</a>
+            other scenarios should still run.
+        </li>
+        <li><a c:run="concordion" href="ContinueAfterErrorScenario.html">After encountering an Error in a scenario</a>
+            other scenarios should still run.
+        </li>
+    </ul>
+</div>
+
+</body>
+</html>

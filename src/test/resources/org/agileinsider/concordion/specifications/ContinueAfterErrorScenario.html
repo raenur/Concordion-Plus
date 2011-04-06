@@ -1,0 +1,38 @@
+<html xmlns:c="http://www.concordion.org/2007/concordion">
+<link href="../../../../concordion.css" rel="stylesheet" type="text/css"/>
+<body>
+
+<h1>Continue After Error Scenario</h1>
+
+<div class="example">
+    <h3>Example</h3>
+
+    <p>When the Concordion Plus Extension is installed that adds the <code>scenario</code>and <code>ignore</code>
+        commands in the <code>http://www.agileinsider.org/concordion/plus</code> namespace.
+        This command will ignore sections of the specification but should continue to process the remainder
+        of the specification.</p>
+
+    <p>Running a specification containing: </p>
+<pre c:execute="process(#TEXT)">
+&lt;div xmlns:cp="http://www.agileinsider.org/concordion/plus" xmlns:c="http://www.concordion.org/2007/concordion"&gt;
+    &lt;p cp:scenario="Error Scenario"&gt;
+        Should get an &lt;span c:execute="nonExistingMethod()"&gt;Exception&lt;/span&gt;
+    &lt;/p&gt;
+    &lt;p cp:scenario="Passing Scenario"&gt;Inside Scenario&lt;/p&gt;
+&lt;/div&gt;
+</pre>
+
+    <p>Should match:</p>
+<pre c:assertEquals="outputMatches(#TEXT)">
+&lt;div xmlns:cp="http://www.agileinsider.org/concordion/plus" xmlns:c="http://www.concordion.org/2007/concordion"&gt;
+    &lt;p cp:scenario="Error Scenario" class="error"&gt;
+        .*&lt;span class="exceptionMessage"&gt;.*
+    &lt;/p&gt;
+    &lt;p cp:scenario="Passing Scenario" class="pass"&gt;Inside Scenario&lt;/p&gt;
+&lt;/div&gt;
+</pre>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<html xmlns:c="http://www.concordion.org/2007/concordion">
+<link href="../../../../concordion.css" rel="stylesheet" type="text/css"/>
+<body>
+
+<h1>Successful Scenario</h1>
+
+<div class="example">
+    <h3>Example</h3>
+
+    <p>When the Scenario extension is installed that adds the <code>scenario</code> command in
+        the <code>http://www.agileinsider.org/concordion/plus</code> namespace.
+        This command will highlight passing scenarios.</p>
+
+    <p>Running a specification containing: </p>
+<pre c:execute="process(#TEXT)">
+&lt;div xmlns:cp="http://www.agileinsider.org/concordion/plus" xmlns:c="http://www.concordion.org/2007/concordion"&gt;
+    &lt;p cp:scenario="Simple Scenario"&gt;Inside Scenario&lt;/p&gt;
+&lt;/div&gt;
+</pre>
+
+    <p>Should produce:</p>
+<pre c:assertEquals="getOutput()">
+&lt;div xmlns:cp="http://www.agileinsider.org/concordion/plus" xmlns:c="http://www.concordion.org/2007/concordion"&gt;
+    &lt;p cp:scenario="Simple Scenario" class="pass"&gt;Inside Scenario&lt;/p&gt;
+&lt;/div&gt;
+</pre>
+
+</div>
+
+</body>
+</html>

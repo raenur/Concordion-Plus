@@ -1,0 +1,38 @@
+<html xmlns:c="http://www.concordion.org/2007/concordion">
+<link href="../../../../concordion.css" rel="stylesheet" type="text/css"/>
+<body>
+
+<h1>Continue After Failing Scenario</h1>
+
+<div class="example">
+    <h3>Example</h3>
+
+    <p>When the Scenario Extension is installed that adds the <code>scenario</code>
+        command in the <code>http://www.agileinsider.org/concordion/plus</code> namespace.
+        This command should highlight failing scenarios.</p>
+
+    <p>Running a specification containing: </p>
+<pre c:execute="process(#TEXT)">
+&lt;div xmlns:cp="http://www.agileinsider.org/concordion/plus" xmlns:c="http://www.concordion.org/2007/concordion"&gt;
+    &lt;p cp:scenario="Failing Scenario"&gt;
+        Should get a &lt;span c:assertEquals="getText()"&gt;failure&lt;/span&gt;
+    &lt;/p&gt;
+    &lt;p cp:scenario="Passing Scenario"&gt;Inside Scenario&lt;/p&gt;
+&lt;/div&gt;
+</pre>
+
+    <p>Should produce:</p>
+<pre c:assertEquals="getOutput()">
+&lt;div xmlns:cp="http://www.agileinsider.org/concordion/plus" xmlns:c="http://www.concordion.org/2007/concordion"&gt;
+    &lt;p cp:scenario="Failing Scenario" class="fail"&gt;
+        Should get a &lt;span c:assertEquals="getText()" class="failure"&gt;&lt;del class="expected"&gt;failure&lt;/del&gt;
+&lt;ins class="actual"&gt;unexpected text&lt;/ins&gt;&lt;/span&gt;
+    &lt;/p&gt;
+    &lt;p cp:scenario="Passing Scenario" class="pass"&gt;Inside Scenario&lt;/p&gt;
+&lt;/div&gt;
+</pre>
+
+</div>
+
+</body>
+</html>
