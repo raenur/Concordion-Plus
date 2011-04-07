@@ -2,7 +2,6 @@ package org.agileinsider.concordion.render;
 
 import org.agileinsider.concordion.event.*;
 import org.concordion.api.Element;
-import org.concordion.api.listener.ThrowableCaughtEvent;
 import org.concordion.internal.listener.ThrowableRenderer;
 
 public class ScenarioResultRenderer extends ThrowableRenderer implements ScenarioListener {
@@ -16,11 +15,6 @@ public class ScenarioResultRenderer extends ThrowableRenderer implements Scenari
 
     public void scenarioError(ScenarioErrorEvent event) {
         addStyle(event, "error");
-    }
-
-    @Override
-    public void throwableCaught(ThrowableCaughtEvent event) {
-        event.getElement().addStyleClass("error").appendNonBreakingSpaceIfBlank();
     }
 
     public void scenarioStarted(ScenarioStartEvent event) {
