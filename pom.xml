@@ -1,14 +1,70 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>org.agileinsider</groupId>
     <artifactId>concordion-plus</artifactId>
     <version>1.0-SNAPSHOT</version>
+
     <name>AgileInsider Concordion Plus</name>
     <url>http://code.google.com/p/concordion-plus/</url>
+    <inceptionYear>2011</inceptionYear>
+
+    <organization>
+        <name>i.Line Design Limited.</name>
+        <url>http://www.ilinedesign.com/</url>
+    </organization>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <scm>
+        <connection>
+            scm:svn:http://concordion-plus.googlecode.com/svn/trunk
+        </connection>
+        <developerConnection>
+            scm:svn:https://concordion-plus.googlecode.com/svn/trunk
+        </developerConnection>
+        <url>
+            http://code.google.com/p/concordion-plus/source/browse/trunk
+        </url>
+    </scm>
+
+    <developers>
+        <developer>
+            <name>Mark Barnes</name>
+            <id>agileinsider</id>
+            <email>mark@agileinsider.org</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <issueManagement>
+        <system>Google Code</system>
+        <url>http://code.google.com/p/concordion-plus/issues/</url>
+    </issueManagement>
+
+    <ciManagement>
+        <system>Hudson</system>
+        <url>http://www.agileinsider.org/jenkins/job/concordion-plus-code/</url>
+    </ciManagement>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <prerequisites>
+        <maven>3.0</maven>
+    </prerequisites>
+
     <dependencies>
         <dependency>
             <groupId>org.mockito</groupId>
@@ -29,6 +85,7 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
+
     <build>
         <pluginManagement>
             <plugins>
@@ -39,8 +96,29 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+
         <finalName>concordion-plus</finalName>
+
         <plugins>
+            <!--
+             | Standard LICENSE and NOTICE files
+            -->
+            <plugin>
+                <artifactId>maven-remote-resources-plugin</artifactId>
+                <version>1.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>process</goal>
+                        </goals>
+                        <configuration>
+                            <resourceBundles>
+                                <resourceBundle>org.apache:apache-jar-resource-bundle:1.4</resourceBundle>
+                            </resourceBundles>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
@@ -87,8 +165,51 @@
                     <configLocation>conf/checkstyle.xml</configLocation>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.riedelcastro</groupId>
+                <artifactId>gcupload-maven-plugin</artifactId>
+                <version>0.9</version>
+                <configuration>
+                    <allowSnapshots>true</allowSnapshots>
+                    <dryRun>true</dryRun>
+                    <serverId>googlecode</serverId>
+                    <uploads>
+                        <upload>
+                            <extensions>jar</extensions>
+                            <labels>Featured</labels>
+                        </upload>
+                        <upload>
+                            <postfix>src</postfix>
+                            <extensions>tar.gz,zip</extensions>
+                            <labels>Type-Source,Featured</labels>
+                        </upload>
+                    </uploads>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.2.1</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>src</descriptorRef>
+                        <descriptorRef>project</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.1</version>
+                <configuration>
+                    <tagBase>https://concordion-plus.googlecode.com/svn/tags</tagBase>
+                    <releaseProfiles>release</releaseProfiles>
+                    <goals>deploy assembly:assembly gcupload:gcupload site-deploy</goals>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+
     <reporting>
         <plugins>
             <plugin>
@@ -98,6 +219,13 @@
                 <reportSets>
                     <reportSet>
                         <reports>
+                            <report>summary</report>
+                            <report>issue-tracking</report>
+                            <report>license</report>
+                            <report>project-team</report>
+                            <report>scm</report>
+                            <report>cim</report>
+                            <report>distribution-management</report>
                         </reports>
                     </reportSet>
                 </reportSets>
