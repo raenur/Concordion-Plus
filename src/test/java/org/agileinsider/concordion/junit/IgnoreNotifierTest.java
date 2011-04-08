@@ -1,4 +1,4 @@
-package org.agileinsider.concordion;
+package org.agileinsider.concordion.junit;
 
 /*
  * Copyright 2011 Mark Barnes (mark@agileinsider.org)
@@ -16,42 +16,42 @@ package org.agileinsider.concordion;
  *    limitations under the License.
  */
 
-import org.concordion.api.extension.ConcordionExtender;
+import org.agileinsider.concordion.event.IgnoreEvent;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.internal.runners.model.EachTestNotifier;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ConcordionPlusExtensionTest {
-    @Mock
-    private IgnoreExtension ignoreExtension;
-    @Mock
-    private ScenarioExtension scenarioExtension;
-    @Mock
-    private ConcordionExtender concordionExtender;
+public class IgnoreNotifierTest {
+    private static final String IGNORED_SECTION = "An Ignored Section";
 
-    private ConcordionPlusExtension concordionPlusExtension;
+    @Mock
+    private NotifierFactory notifierFactory;
+    @Mock
+    private EachTestNotifier testNotifier;
+    private IgnoreEvent anEvent;
+
+    private IgnoreNotifier ignoreNotifier;
 
     @Before
     public void setUp() throws Exception {
-        concordionPlusExtension = new ConcordionPlusExtension(ignoreExtension, scenarioExtension);
+        anEvent = new IgnoreEvent(IGNORED_SECTION, null);
+        when(notifierFactory.createNotifier(anEvent)).thenReturn(testNotifier);
+
+        ignoreNotifier = new IgnoreNotifier(notifierFactory);
     }
 
     @Test
-    public void shouldRegisterIgnoreExtension() throws Exception {
-        concordionPlusExtension.addTo(concordionExtender);
+    public void shouldNotifyJunitOnSuccess() throws Exception {
+        ignoreNotifier.ignoredReported(anEvent);
 
-        verify(ignoreExtension).addTo(concordionExtender);
-    }
-
-    @Test
-    public void shouldRegisterScenarioExtension() throws Exception {
-        concordionPlusExtension.addTo(concordionExtender);
-
-        verify(scenarioExtension).addTo(concordionExtender);
+        verify(testNotifier).fireTestIgnored();
+        verifyNoMoreInteractions(testNotifier);
     }
 }

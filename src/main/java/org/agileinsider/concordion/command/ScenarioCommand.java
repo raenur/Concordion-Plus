@@ -1,8 +1,33 @@
 package org.agileinsider.concordion.command;
 
-import junit.framework.AssertionFailedError;
+/*
+ * Copyright 2011 Mark Barnes (mark@agileinsider.org)
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
 import org.agileinsider.concordion.event.*;
-import org.concordion.api.*;
+
+import junit.framework.AssertionFailedError;
+import ognl.DefaultMemberAccess;
+import ognl.Ognl;
+import ognl.OgnlContext;
+import ognl.OgnlException;
+import org.concordion.api.AbstractCommand;
+import org.concordion.api.CommandCall;
+import org.concordion.api.Evaluator;
+import org.concordion.api.ResultRecorder;
+import org.concordion.internal.OgnlEvaluator;
 import org.concordion.internal.util.Announcer;
 import org.junit.After;
 import org.junit.Before;
@@ -11,10 +36,8 @@ public class ScenarioCommand extends AbstractCommand {
     private final Announcer<ScenarioListener> listeners = Announcer.to(ScenarioListener.class);
     private final MethodInvoker methodInvoker;
 
-    private ScenarioContext scenarioContext = new ScenarioContext();
-
     public ScenarioCommand() {
-        this(new SimpleMethodInvoker());
+        this(new MethodInvoker());
     }
 
     public ScenarioCommand(MethodInvoker methodInvoker) {
@@ -26,60 +49,40 @@ public class ScenarioCommand extends AbstractCommand {
     }
 
     @Override
-    public void setUp(CommandCall commandCall, Evaluator evaluator, ResultRecorder resultRecorder) {
-        String scenarioName = commandCall.getExpression();
-        startScenarioContext(scenarioName, evaluator);
-    }
-
-    @Override
     public void execute(CommandCall commandCall, Evaluator evaluator, ResultRecorder resultRecorder) {
-        commandCall.getChildren().processSequentially(evaluator, scenarioContext.getResultRecorder());
-    }
-
-    @Override
-    public void verify(CommandCall commandCall, Evaluator evaluator, ResultRecorder resultRecorder) {
-        String scenarioName = commandCall.getExpression();
-        ScenarioResultRecorder scenarioResults = scenarioContext.getResultRecorder();
-
-        if (scenarioResults.getExceptionCount() > 0) {
-            announceError(scenarioName, commandCall.getElement(), new AssertionFailedError("Scenario has errors."));
-        } else if (scenarioResults.getFailureCount() > 0) {
-            announceFail(scenarioName, commandCall.getElement());
-        } else {
-            announceSuccess(scenarioName, commandCall.getElement());
+        Object scenarioFixture = null;
+        try {
+            OgnlContext permissiveContext = new OgnlContext();
+            permissiveContext.setMemberAccess(new DefaultMemberAccess(true));
+            Object rootObject = Ognl.getValue("rootObject", permissiveContext, evaluator);
+            scenarioFixture = rootObject.getClass().newInstance();
+        } catch (OgnlException e) {
+            throw new RuntimeException("Nasty hack exposed!!!", e);
+        } catch (InstantiationException e) {
+            throw new RuntimeException("Nasty hack exposed!!!", e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException("Nasty hack exposed!!!", e);
         }
-        endScenarioContext(scenarioName, evaluator);
-    }
 
-    private void announceStart(String scenario) {
-        listeners.announce().scenarioStarted(new ScenarioStartEvent(scenario));
-    }
+        String scenarioName = commandCall.getExpression();
+        listeners.announce().scenarioStarted(new ScenarioStartEvent(scenarioName));
 
-    private void announceSuccess(String scenario, Element element) {
-        listeners.announce().successReported(new ScenarioSuccessEvent(scenario, element));
-    }
+        ScenarioResultRecorder scenarioResultRecorder = new ScenarioResultRecorder();
 
-    private void announceFail(String scenario, Element element) {
-        listeners.announce().failureReported(new ScenarioFailureEvent(scenario, element));
-    }
+        methodInvoker.invokeAnnotatedMethods(scenarioFixture, Before.class, scenarioResultRecorder);
 
-    private void announceError(String scenario, Element element, Throwable throwable) {
-        listeners.announce().scenarioError(new ScenarioErrorEvent(scenario, element, throwable));
-    }
+        OgnlEvaluator scenarioEvaluator = new OgnlEvaluator(scenarioFixture);
 
-    private void announceFinish(String scenario) {
-        listeners.announce().scenarioFinished(new ScenarioFinishEvent(scenario));
-    }
+        commandCall.getChildren().processSequentially(scenarioEvaluator, scenarioResultRecorder);
+        if (scenarioResultRecorder.getExceptionCount() > 0) {
+            listeners.announce().scenarioError(new ScenarioErrorEvent(scenarioName, commandCall.getElement(), new AssertionFailedError("Scenario has errors.")));
+        } else if (scenarioResultRecorder.getFailureCount() > 0) {
+            listeners.announce().failureReported(new ScenarioFailureEvent(scenarioName, commandCall.getElement()));
+        } else {
+            listeners.announce().successReported(new ScenarioSuccessEvent(scenarioName, commandCall.getElement()));
+        }
 
-    private void startScenarioContext(String scenarioName, Evaluator evaluator) {
-        announceStart(scenarioName);
-        scenarioContext = scenarioContext.create(evaluator);
-        methodInvoker.invokeAnnotatedMethods(scenarioContext, Before.class);
-    }
-
-    private void endScenarioContext(String scenarioName, Evaluator evaluator) {
-        methodInvoker.invokeAnnotatedMethods(scenarioContext, After.class);
-        scenarioContext = scenarioContext.getParent(evaluator);
-        announceFinish(scenarioName);
+        methodInvoker.invokeAnnotatedMethods(scenarioFixture, After.class, scenarioResultRecorder);
+        listeners.announce().scenarioFinished(new ScenarioFinishEvent(scenarioName));
     }
 }
