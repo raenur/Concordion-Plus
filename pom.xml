@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -11,7 +10,7 @@
 
     <groupId>org.agileinsider</groupId>
     <artifactId>concordion-plus</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <name>AgileInsider Concordion Plus</name>
     <url>http://code.google.com/p/concordion-plus/</url>
@@ -32,13 +31,13 @@
 
     <scm>
         <connection>
-            scm:svn:http://concordion-plus.googlecode.com/svn/trunk
+            scm:svn:http://concordion-plus.googlecode.com/svn/tags/concordion-plus-1.0
         </connection>
         <developerConnection>
-            scm:svn:https://concordion-plus.googlecode.com/svn/trunk
+            scm:svn:https://concordion-plus.googlecode.com/svn/tags/concordion-plus-1.0
         </developerConnection>
         <url>
-            http://code.google.com/p/concordion-plus/source/browse/trunk
+            http://code.google.com/p/concordion-plus/source/browse/tags/concordion-plus-1.0
         </url>
     </scm>
 
