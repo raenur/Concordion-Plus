@@ -42,11 +42,14 @@ public class SpecificationFrameworkMethod extends FrameworkMethod {
 
     @Override
     public boolean equals(Object o) {
-        return specificationDescription.equals(((SpecificationFrameworkMethod)o).specificationDescription);
+        if (!SpecificationFrameworkMethod.class.isInstance(o)) {
+            return false;
+        }
+        return specificationDescription != null && specificationDescription.equals(((SpecificationFrameworkMethod) o).specificationDescription);
     }
 
     @Override
     public int hashCode() {
-        return specificationDescription.hashCode();
+        return (specificationDescription != null ? specificationDescription.hashCode() : 0);
     }
 }

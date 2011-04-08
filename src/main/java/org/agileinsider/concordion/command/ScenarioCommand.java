@@ -22,7 +22,6 @@ import junit.framework.AssertionFailedError;
 import ognl.DefaultMemberAccess;
 import ognl.Ognl;
 import ognl.OgnlContext;
-import ognl.OgnlException;
 import org.concordion.api.AbstractCommand;
 import org.concordion.api.CommandCall;
 import org.concordion.api.Evaluator;
@@ -56,11 +55,7 @@ public class ScenarioCommand extends AbstractCommand {
             permissiveContext.setMemberAccess(new DefaultMemberAccess(true));
             Object rootObject = Ognl.getValue("rootObject", permissiveContext, evaluator);
             scenarioFixture = rootObject.getClass().newInstance();
-        } catch (OgnlException e) {
-            throw new RuntimeException("Nasty hack exposed!!!", e);
-        } catch (InstantiationException e) {
-            throw new RuntimeException("Nasty hack exposed!!!", e);
-        } catch (IllegalAccessException e) {
+        } catch (Exception e) {
             throw new RuntimeException("Nasty hack exposed!!!", e);
         }
 
