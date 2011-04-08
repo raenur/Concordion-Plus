@@ -25,7 +25,10 @@ import org.agileinsider.concordion.render.IgnoreResultRenderer;
 import org.agileinsider.concordion.render.ScenarioResultRenderer;
 
 import org.concordion.Concordion;
-import org.concordion.api.*;
+import org.concordion.api.FullOGNL;
+import org.concordion.api.ResultSummary;
+import org.concordion.api.Source;
+import org.concordion.api.Target;
 import org.concordion.internal.ConcordionBuilder;
 import org.concordion.internal.OgnlEvaluatorFactory;
 import org.junit.runner.notification.RunNotifier;
@@ -34,7 +37,6 @@ import org.junit.runners.model.Statement;
 public class ConcordionStatement extends Statement {
     private static Source fixedSource;
     private static Target fixedTarget;
-    private static Resource fixedResource;
 
     private Class fixtureClass;
     private final Object fixture;
@@ -64,8 +66,6 @@ public class ConcordionStatement extends Statement {
         if (fixedTarget != null) {
             concordionBuilder.withTarget(fixedTarget);
         }
-        if (fixedResource != null) {
-        }
         concordionBuilder.withCommand(ConcordionPlusExtension.CONCORDION_PLUS_NAMESPACE,
                 ScenarioExtension.SCENARIO_COMMAND,
                 scenarioCommand);
@@ -94,9 +94,5 @@ public class ConcordionStatement extends Statement {
 
     public static void setTarget(Target fixedTarget) {
         ConcordionStatement.fixedTarget = fixedTarget;
-    }
-
-    public static void setResource(Resource fixedResource) {
-        ConcordionStatement.fixedResource = fixedResource;
     }
 }

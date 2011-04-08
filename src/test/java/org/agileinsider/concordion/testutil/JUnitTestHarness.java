@@ -33,7 +33,6 @@ public class JUnitTestHarness extends ConcordionTestHarness {
     protected void process(Object fixture, Resource resource, StubSource stubSource, StubTarget stubTarget) throws Throwable {
         ConcordionStatement.setSource(stubSource);
         ConcordionStatement.setTarget(stubTarget);
-        ConcordionStatement.setResource(resource);
         RunnerBuilder builder = new AllDefaultPossibilitiesBuilder(true);
         Runner runner = builder.runnerForClass(fixture.getClass());
         runner.run(new RunNotifier());
