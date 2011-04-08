@@ -39,17 +39,4 @@ public class SpecificationFrameworkMethod extends FrameworkMethod {
     public <T extends Annotation> T getAnnotation(Class<T> annotationType) {
         return null;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (!SpecificationFrameworkMethod.class.isInstance(o)) {
-            return false;
-        }
-        return specificationDescription != null && specificationDescription.equals(((SpecificationFrameworkMethod) o).specificationDescription);
-    }
-
-    @Override
-    public int hashCode() {
-        return (specificationDescription != null ? specificationDescription.hashCode() : 0);
-    }
 }
