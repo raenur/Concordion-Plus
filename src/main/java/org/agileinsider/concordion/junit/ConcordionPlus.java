@@ -37,7 +37,7 @@ public class ConcordionPlus extends BlockJUnit4ClassRunner {
 
     public ConcordionPlus(Class<?> fixtureClass) throws InitializationError {
         super(fixtureClass);
-        String testDescription = "Executable Specification: '" + fixtureClass.getSimpleName().replaceAll("Test$", "'");
+        String testDescription = "Executable Specification: '" + fixtureClass.getSimpleName().replaceAll("Test$", "") + "'";
         specificationDescription = Description.createTestDescription(fixtureClass, testDescription);
         statementBuilder = new ConcordionStatementBuilder(fixtureClass);
         try {
@@ -57,7 +57,7 @@ public class ConcordionPlus extends BlockJUnit4ClassRunner {
 
     @Override
     protected Statement methodInvoker(FrameworkMethod method, Object test) {
-        if (method == specificationMethod) {
+        if (method.equals(specificationMethod)) {
             return statementBuilder.withFixture(test).buildStatement();
         }
         return super.methodInvoker(method, test);

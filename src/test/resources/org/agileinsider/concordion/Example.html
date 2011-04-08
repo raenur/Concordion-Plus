@@ -1,0 +1,39 @@
+<html xmlns:cp="http://www.agileinsider.org/concordion/plus" xmlns:c="http://www.concordion.org/2007/concordion">
+<head>
+    <link href="../../../../concordion.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<h1>Successful Scenario</h1>
+
+<div class="example">
+    <h3>Example</h3>
+
+    <p cp:ignore="work in progress">
+        <span c:execute="nonExistantMethod()">Should not try to execute.</span>
+    </p>
+
+    <p cp:scenario="Passing Scenario">Inside Scenario</p>
+
+    <p cp:scenario="Error Scenario">
+        Should get an <span c:execute="anotherNonExistingMethod()">Exception</span>
+    </p>
+
+    <p cp:scenario="Another Passing Scenario">Inside Another Scenario</p>
+
+    <p cp:scenario="Failing Scenario">
+        Should get a <span c:assertEquals="getText()">failure</span>
+    </p>
+
+    <p cp:ignore="more stuff to do">
+        <span c:execute="anotherNonExistantMethod()">Should not try to execute.</span>
+    </p>
+
+    <ul>
+        <li cp:ignore="A list item to do">To <span c:execute="doSomething()">do</span>...</li>
+        <li cp:scenario="A list item which is done">A list item</li>
+        <li cp:scenario="Another list item which is done">Something else completed</li>
+    </ul>
+</div>
+</body>
+</html>
