@@ -57,7 +57,7 @@ public class ConcordionPlus extends BlockJUnit4ClassRunner {
 
     @Override
     protected Statement methodInvoker(FrameworkMethod method, Object test) {
-        if (method.equals(specificationMethod)) {
+        if (method == specificationMethod) {
             return statementBuilder.withFixture(test).buildStatement();
         }
         return super.methodInvoker(method, test);
