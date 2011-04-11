@@ -25,4 +25,8 @@ public class Example {
     public String getText() {
         return "success";
     }
+
+    public String getUnexpectedAssertionMessage() {
+        return "unexpected message";
+    }
 }
