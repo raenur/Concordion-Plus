@@ -26,7 +26,6 @@ import org.concordion.internal.util.IOUtil;
 
 public class ScenarioExtension implements ConcordionExtension {
     public static final String SCENARIO_COMMAND = "scenario";
-    public static final String SCENARIO_CSS = "/org/agileinsider/concordion/scenario.css";
 
     private final ScenarioCommand scenarioCommand;
     private final ScenarioListener resultRenderer;
@@ -44,7 +43,7 @@ public class ScenarioExtension implements ConcordionExtension {
     public void addTo(ConcordionExtender concordionExtender) {
         concordionExtender.withCommand(ConcordionPlusExtension.CONCORDION_PLUS_NAMESPACE, SCENARIO_COMMAND, scenarioCommand);
         scenarioCommand.addScenarioListener(resultRenderer);
-        String stylesheetContent = IOUtil.readResourceAsString(SCENARIO_CSS);
+        String stylesheetContent = IOUtil.readResourceAsString(ConcordionPlusExtension.CONCORDION_PLUS_CSS);
         concordionExtender.withEmbeddedCSS(stylesheetContent);
     }
 }

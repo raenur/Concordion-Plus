@@ -14,5 +14,29 @@
  *    limitations under the License.
  */
 
-.skip {
+.scenario {
+    background-color: #FFFFFF;
+    border: 1px dashed #A2D9EF;
+    margin-bottom: 4px;
+    padding: 4px;
+}
+
+.scenario.error, .error {
+    background-color: #ffb0b0;
+    border: 1px solid #A2D9EF;
+}
+
+.scenario.fail, .fail {
+    background-color: #ffc770;
+    border: 1px solid #A2D9EF;
+}
+
+.scenario.pass, .pass {
+    background-color: #d0ffd0;
+    border: 1px solid #A2D9EF;
+}
+
+.scenario.skip, .skip {
+    background-color: #e0e0e0;
+    color: #a0a0a0;
 }

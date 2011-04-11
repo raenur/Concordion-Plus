@@ -31,6 +31,7 @@ import org.concordion.api.Source;
 import org.concordion.api.Target;
 import org.concordion.internal.ConcordionBuilder;
 import org.concordion.internal.OgnlEvaluatorFactory;
+import org.concordion.internal.util.IOUtil;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.model.Statement;
 
@@ -72,6 +73,9 @@ public class ConcordionStatement extends Statement {
         concordionBuilder.withCommand(ConcordionPlusExtension.CONCORDION_PLUS_NAMESPACE,
                 IgnoreExtension.IGNORE_COMMAND,
                 ignoreCommand);
+        String css = IOUtil.readResourceAsString(ConcordionPlusExtension.CONCORDION_PLUS_CSS);
+        concordionBuilder.withEmbeddedCSS(css);
+
         Concordion concordion = concordionBuilder.build();
         ResultSummary resultSummary = concordion.process(fixture);
         resultSummary.print(System.out, fixture);
