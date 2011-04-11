@@ -9,17 +9,17 @@
 <div class="example">
     <h3>Example</h3>
 
-    <div class="scenario" cp:ignore="work in progress">
+    <div class="scenario" cp:ignore="Work In Progress">
         This is an ignored
         <span c:execute="nonExistantMethod()">section</span>
         which might indicate functionality that is currently being implemented.
     </div>
 
-    <div class="scenario"  cp:scenario="Passing Scenario">
+    <div class="scenario"  cp:scenario="Very Simple Passing Scenario">
         This is a very simple scenario, which doesn't actually do anything but illustrates the markup applied.
     </div>
 
-    <div class="scenario"  cp:scenario="Error Scenario">
+    <div class="scenario"  cp:scenario="A Scenario With An Error">
         Of course, some scenarios may fail due to
         <span c:execute="anotherNonExistingMethod()">Exceptions.</span>
         And should be marked up accordingly.
@@ -27,16 +27,17 @@
 
     <div class="scenario"  cp:scenario="Another Passing Scenario">
         But just because one scenario has an exception,
-        should allow other scenarios to be tested.
+        should allow other scenarios to be tested and report
+        <span c:assertEquals="getText()">success</span> when they pass.
     </div>
 
-    <div class="scenario"  cp:scenario="Failing Scenario">
+    <div class="scenario"  cp:scenario="A Scenario Which Fails">
         And of course, som scenarios may fail with a real
         <span c:assertEquals="getText()">failure</span>
         caused by invalid assumptions, indicating a real failure in the implementation.
     </div>
 
-    <div class="scenario"  cp:ignore="more stuff to do">
+    <div class="scenario"  cp:ignore="Yet More Work To Do">
         And of course, ignored sections should not execute any of the fixture code,
         which in this case would have resulted in a
         <span c:execute="anotherNonExistantMethod()">exception</span>

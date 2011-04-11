@@ -18,8 +18,8 @@ package org.agileinsider.concordion.junit;
 
 import org.agileinsider.concordion.event.*;
 
+import junit.framework.AssertionFailedError;
 import org.concordion.api.listener.ThrowableCaughtEvent;
-import org.junit.internal.AssumptionViolatedException;
 import org.junit.internal.runners.model.EachTestNotifier;
 
 public class ScenarioNotifier implements ScenarioListener {
@@ -39,7 +39,7 @@ public class ScenarioNotifier implements ScenarioListener {
     }
 
     public void failureReported(ScenarioFailureEvent event) {
-        scenarioEventNotifier.addFailedAssumption(new AssumptionViolatedException("Scenario failed! Check output for details."));
+        scenarioEventNotifier.addFailure(new AssertionFailedError("Scenario failed! Check output for details."));
     }
 
     public void scenarioStarted(ScenarioStartEvent event) {

@@ -18,7 +18,6 @@ package org.agileinsider.concordion.command;
 
 import org.agileinsider.concordion.event.*;
 
-import junit.framework.AssertionFailedError;
 import ognl.DefaultMemberAccess;
 import ognl.Ognl;
 import ognl.OgnlContext;
@@ -70,7 +69,7 @@ public class ScenarioCommand extends AbstractCommand {
 
         commandCall.getChildren().processSequentially(scenarioEvaluator, scenarioResultRecorder);
         if (scenarioResultRecorder.getExceptionCount() > 0) {
-            listeners.announce().scenarioError(new ScenarioErrorEvent(scenarioName, commandCall.getElement(), new AssertionFailedError("Scenario has errors.")));
+            listeners.announce().scenarioError(new ScenarioErrorEvent(scenarioName, commandCall.getElement(), new RuntimeException("Scenario has errors.")));
         } else if (scenarioResultRecorder.getFailureCount() > 0) {
             listeners.announce().failureReported(new ScenarioFailureEvent(scenarioName, commandCall.getElement()));
         } else {

@@ -18,10 +18,10 @@ package org.agileinsider.concordion.junit;
 
 import org.agileinsider.concordion.event.*;
 
+import junit.framework.AssertionFailedError;
 import org.concordion.api.listener.ThrowableCaughtEvent;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.internal.AssumptionViolatedException;
 import org.junit.internal.runners.model.EachTestNotifier;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -72,10 +72,10 @@ public class ScenarioNotifierTest {
     }
 
     @Test
-    public void shouldThrowAnAssumptionViolatedExceptionForFailures() throws Exception {
+    public void shouldAddAnAssertionFailedErrorForFailures() throws Exception {
         scenarioNotifier.failureReported(new ScenarioFailureEvent(SCENARIO_NAME, null));
 
-        verify(testNotifier).addFailedAssumption(any(AssumptionViolatedException.class));
+        verify(testNotifier).addFailure(any(AssertionFailedError.class));
         verifyNoMoreInteractions(testNotifier);
 
     }

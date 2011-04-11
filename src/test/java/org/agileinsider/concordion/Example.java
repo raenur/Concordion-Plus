@@ -23,6 +23,6 @@ import org.junit.runner.RunWith;
 @RunWith(ConcordionPlus.class)
 public class Example {
     public String getText() {
-        return "unexpected text";
+        return "success";
     }
 }
