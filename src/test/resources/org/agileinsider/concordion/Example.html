@@ -4,35 +4,50 @@
 </head>
 <body>
 
-<h1>Successful Scenario</h1>
+<h1>Some Examples of Using Concordion Plus</h1>
 
 <div class="example">
     <h3>Example</h3>
 
     <div class="scenario" cp:ignore="work in progress">
-        <span c:execute="nonExistantMethod()">Should not try to execute.</span>
+        This is an ignored
+        <span c:execute="nonExistantMethod()">section</span>
+        which might indicate functionality that is currently being implemented.
     </div>
 
-    <div class="scenario"  cp:scenario="Passing Scenario">Inside Scenario</div>
+    <div class="scenario"  cp:scenario="Passing Scenario">
+        This is a very simple scenario, which doesn't actually do anything but illustrates the markup applied.
+    </div>
 
     <div class="scenario"  cp:scenario="Error Scenario">
-        Should get an <span c:execute="anotherNonExistingMethod()">Exception</span>
+        Of course, some scenarios may fail due to
+        <span c:execute="anotherNonExistingMethod()">Exceptions.</span>
+        And should be marked up accordingly.
     </div>
 
-    <div class="scenario"  cp:scenario="Another Passing Scenario">Inside Another Scenario</div>
+    <div class="scenario"  cp:scenario="Another Passing Scenario">
+        But just because one scenario has an exception,
+        should allow other scenarios to be tested.
+    </div>
 
     <div class="scenario"  cp:scenario="Failing Scenario">
-        Should get a <span c:assertEquals="getText()">failure</span>
+        And of course, som scenarios may fail with a real
+        <span c:assertEquals="getText()">failure</span>
+        caused by invalid assumptions, indicating a real failure in the implementation.
     </div>
 
     <div class="scenario"  cp:ignore="more stuff to do">
-        <span c:execute="anotherNonExistantMethod()">Should not try to execute.</span>
+        And of course, ignored sections should not execute any of the fixture code,
+        which in this case would have resulted in a
+        <span c:execute="anotherNonExistantMethod()">exception</span>
+        being thrown.
     </div>
 
+    <h3>Using lists for scenarios</h3>
     <ul>
-        <li class="scenario" cp:ignore="A list item to do">To <span c:execute="doSomething()">do</span>...</li>
-        <li class="scenario" cp:scenario="A list item which is done">A list item</li>
-        <li class="scenario" cp:scenario="Another list item which is done">Something else completed</li>
+        <li class="scenario" cp:ignore="A list item to do">To <span c:execute="doSomething()">do</span>..., work in progress</li>
+        <li class="scenario" cp:scenario="A list item which is done">Something we've done ;)</li>
+        <li class="scenario" cp:scenario="Another list item which is done">Something else we've completed</li>
     </ul>
 </div>
 </body>
