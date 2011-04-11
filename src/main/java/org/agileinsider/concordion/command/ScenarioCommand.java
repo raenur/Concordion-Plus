@@ -21,10 +21,7 @@ import org.agileinsider.concordion.event.*;
 import ognl.DefaultMemberAccess;
 import ognl.Ognl;
 import ognl.OgnlContext;
-import org.concordion.api.AbstractCommand;
-import org.concordion.api.CommandCall;
-import org.concordion.api.Evaluator;
-import org.concordion.api.ResultRecorder;
+import org.concordion.api.*;
 import org.concordion.internal.OgnlEvaluator;
 import org.concordion.internal.util.Announcer;
 import org.junit.After;
@@ -70,10 +67,13 @@ public class ScenarioCommand extends AbstractCommand {
         commandCall.getChildren().processSequentially(scenarioEvaluator, scenarioResultRecorder);
         if (scenarioResultRecorder.getExceptionCount() > 0) {
             listeners.announce().scenarioError(new ScenarioErrorEvent(scenarioName, commandCall.getElement(), new RuntimeException("Scenario has errors.")));
+            resultRecorder.record(Result.EXCEPTION);
         } else if (scenarioResultRecorder.getFailureCount() > 0) {
             listeners.announce().failureReported(new ScenarioFailureEvent(scenarioName, commandCall.getElement()));
+            resultRecorder.record(Result.FAILURE);
         } else {
             listeners.announce().successReported(new ScenarioSuccessEvent(scenarioName, commandCall.getElement()));
+            resultRecorder.record(Result.SUCCESS);
         }
 
         methodInvoker.invokeAnnotatedMethods(scenarioFixture, After.class, scenarioResultRecorder);
