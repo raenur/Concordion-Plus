@@ -10,7 +10,7 @@
 
     <groupId>org.agileinsider</groupId>
     <artifactId>concordion-plus</artifactId>
-    <version>1.0</version>
+    <version>1.1-SNAPSHOT</version>
 
     <name>AgileInsider Concordion Plus</name>
     <url>http://code.google.com/p/concordion-plus/</url>
@@ -31,13 +31,13 @@
 
     <scm>
         <connection>
-            scm:svn:http://concordion-plus.googlecode.com/svn/tags/concordion-plus-1.0
+            scm:svn:http://concordion-plus.googlecode.com/svn/trunk
         </connection>
         <developerConnection>
-            scm:svn:https://concordion-plus.googlecode.com/svn/tags/concordion-plus-1.0
+            scm:svn:https://concordion-plus.googlecode.com/svn/trunk
         </developerConnection>
         <url>
-            http://code.google.com/p/concordion-plus/source/browse/tags/concordion-plus-1.0
+            http://code.google.com/p/concordion-plus/source/browse/trunk
         </url>
     </scm>
 
