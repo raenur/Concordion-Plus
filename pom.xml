@@ -151,7 +151,11 @@
                     <skip>false</skip>
                     <includes>
                         <include>**/*Test.java</include>
+                        <include>**/Specifications.java</include>
                     </includes>
+                    <excludes>
+                        <exclude>**/specifications/*Test.java</exclude>
+                    </excludes>
                     <systemProperties>
                         <property>
                             <name>concordion.output.dir</name>

@@ -14,21 +14,21 @@
     <p>Running a specification containing: </p>
 <pre c:execute="process(#TEXT)">
 &lt;div xmlns:cp="http://www.agileinsider.org/concordion/plus" xmlns:c="http://www.concordion.org/2007/concordion"&gt;
-    &lt;p cp:scenario="Failing Scenario"&gt;
+    &lt;div cp:scenario="Failing Scenario"&gt;
         Should get a &lt;span c:assertEquals="getText()"&gt;failure&lt;/span&gt;
-    &lt;/p&gt;
-    &lt;p cp:scenario="Passing Scenario"&gt;Inside Scenario&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div cp:scenario="Passing Scenario"&gt;Inside Scenario&lt;/div&gt;
 &lt;/div&gt;
 </pre>
 
     <p>Should produce:</p>
 <pre c:assertEquals="getOutput()">
 &lt;div xmlns:cp="http://www.agileinsider.org/concordion/plus" xmlns:c="http://www.concordion.org/2007/concordion"&gt;
-    &lt;p cp:scenario="Failing Scenario" class="fail"&gt;
+    &lt;div cp:scenario="Failing Scenario" class="fail"&gt;
         Should get a &lt;span c:assertEquals="getText()" class="failure"&gt;&lt;del class="expected"&gt;failure&lt;/del&gt;
 &lt;ins class="actual"&gt;unexpected text&lt;/ins&gt;&lt;/span&gt;
-    &lt;/p&gt;
-    &lt;p cp:scenario="Passing Scenario" class="pass"&gt;Inside Scenario&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div cp:scenario="Passing Scenario" class="pass"&gt;Inside Scenario&lt;/div&gt;
 &lt;/div&gt;
 </pre>
 

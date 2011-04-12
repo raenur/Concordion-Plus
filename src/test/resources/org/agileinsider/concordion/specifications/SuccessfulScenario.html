@@ -14,14 +14,14 @@
     <p>Running a specification containing: </p>
 <pre c:execute="process(#TEXT)">
 &lt;div xmlns:cp="http://www.agileinsider.org/concordion/plus" xmlns:c="http://www.concordion.org/2007/concordion"&gt;
-    &lt;p cp:scenario="Simple Scenario"&gt;Inside Scenario&lt;/p&gt;
+    &lt;div cp:scenario="Simple Scenario"&gt;Inside Scenario&lt;/div&gt;
 &lt;/div&gt;
 </pre>
 
     <p>Should produce:</p>
 <pre c:assertEquals="getOutput()">
 &lt;div xmlns:cp="http://www.agileinsider.org/concordion/plus" xmlns:c="http://www.concordion.org/2007/concordion"&gt;
-    &lt;p cp:scenario="Simple Scenario" class="pass"&gt;Inside Scenario&lt;/p&gt;
+    &lt;div cp:scenario="Simple Scenario" class="pass"&gt;Inside Scenario&lt;/div&gt;
 &lt;/div&gt;
 </pre>
 
