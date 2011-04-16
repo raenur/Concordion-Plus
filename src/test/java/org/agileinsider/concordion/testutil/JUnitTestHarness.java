@@ -21,12 +21,14 @@ import org.agileinsider.concordion.junit.ConcordionStatement;
 import org.concordion.api.Resource;
 import org.junit.internal.builders.AllDefaultPossibilitiesBuilder;
 import org.junit.runner.Runner;
-import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.model.RunnerBuilder;
 
 public class JUnitTestHarness extends ConcordionTestHarness {
+    private JUnitTestHarnessRunNotifier notifier;
+
     public JUnitTestHarness(Object fixture) {
         super(fixture);
+        notifier = new JUnitTestHarnessRunNotifier();
     }
 
     @Override
@@ -35,6 +37,10 @@ public class JUnitTestHarness extends ConcordionTestHarness {
         ConcordionStatement.setTarget(stubTarget);
         RunnerBuilder builder = new AllDefaultPossibilitiesBuilder(true);
         Runner runner = builder.runnerForClass(fixture.getClass());
-        runner.run(new RunNotifier());
+        runner.run(notifier);
+    }
+
+    public JUnitTestHarnessRunNotifier getNotifier() {
+        return notifier;
     }
 }

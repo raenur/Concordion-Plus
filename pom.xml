@@ -172,6 +172,29 @@
                     <configLocation>conf/checkstyle.xml</configLocation>
                 </configuration>
             </plugin>
+            <!--
+            <plugin>
+                <groupId>org.riedelcastro</groupId>
+                <artifactId>gcupload-maven-plugin</artifactId>
+                <version>0.9</version>
+                <configuration>
+                    <allowSnapshots>true</allowSnapshots>
+                    <dryRun>true</dryRun>
+                    <serverId>googlecode</serverId>
+                    <uploads>
+                        <upload>
+                            <extensions>jar</extensions>
+                            <labels>Featured</labels>
+                        </upload>
+                        <upload>
+                            <postfix>src</postfix>
+                            <extensions>tar.gz,zip</extensions>
+                            <labels>Type-Source,Featured</labels>
+                        </upload>
+                    </uploads>
+                </configuration>
+            </plugin>
+            -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>

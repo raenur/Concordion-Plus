@@ -25,7 +25,7 @@ import org.junit.runner.RunWith;
 @RunWith(ConcordionRunner.class)
 public class ConcordionPlusTest extends ConcordionPlusAcceptanceTest {
     @RunWith(ConcordionPlus.class)
-    public static class AnnotatedTest {
+    public static class TestAnnotatedWithConcordionPlus {
         public String getText() {
             return "unexpected text";
         }
@@ -33,6 +33,6 @@ public class ConcordionPlusTest extends ConcordionPlusAcceptanceTest {
 
     @Override
     public Object getFixture() {
-        return new AnnotatedTest();
+        return new TestAnnotatedWithConcordionPlus();
     }
 }
