@@ -17,11 +17,8 @@ package org.agileinsider.concordion.junit;
  */
 
 import org.agileinsider.concordion.ConcordionPlusExtension;
-import org.agileinsider.concordion.IgnoreExtension;
 import org.agileinsider.concordion.ScenarioExtension;
-import org.agileinsider.concordion.command.IgnoreCommand;
 import org.agileinsider.concordion.command.ScenarioCommand;
-import org.agileinsider.concordion.render.IgnoreResultRenderer;
 import org.agileinsider.concordion.render.ScenarioResultRenderer;
 
 import org.concordion.Concordion;
@@ -42,7 +39,6 @@ public class ConcordionStatement extends Statement {
     private Class fixtureClass;
     private final Object fixture;
     private RunNotifier notifier;
-    private IgnoreCommand ignoreCommand;
     private ScenarioCommand scenarioCommand;
 
     public ConcordionStatement(Class fixtureClass, Object fixture, RunNotifier notifier) {
@@ -50,9 +46,7 @@ public class ConcordionStatement extends Statement {
         this.fixture = fixture;
         this.notifier = notifier;
 
-        ignoreCommand = new IgnoreCommand();
         scenarioCommand = new ScenarioCommand();
-        addIgnoreListeners();
         addScenarioListeners();
     }
 
@@ -70,9 +64,6 @@ public class ConcordionStatement extends Statement {
         concordionBuilder.withCommand(ConcordionPlusExtension.CONCORDION_PLUS_NAMESPACE,
                 ScenarioExtension.SCENARIO_COMMAND,
                 scenarioCommand);
-        concordionBuilder.withCommand(ConcordionPlusExtension.CONCORDION_PLUS_NAMESPACE,
-                IgnoreExtension.IGNORE_COMMAND,
-                ignoreCommand);
         String css = IOUtil.readResourceAsString(ConcordionPlusExtension.CONCORDION_PLUS_CSS);
         concordionBuilder.withEmbeddedCSS(css);
 
@@ -85,11 +76,6 @@ public class ConcordionStatement extends Statement {
     private void addScenarioListeners() {
         scenarioCommand.addScenarioListener(new ScenarioResultRenderer());
         scenarioCommand.addScenarioListener(new ScenarioNotifier(new NotifierFactory(notifier, fixtureClass)));
-    }
-
-    private void addIgnoreListeners() {
-        ignoreCommand.addIgnoreListener(new IgnoreResultRenderer());
-        ignoreCommand.addIgnoreListener(new IgnoreNotifier(new NotifierFactory(notifier, fixtureClass)));
     }
 
     public static void setSource(Source fixedSource) {

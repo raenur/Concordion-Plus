@@ -16,7 +16,7 @@ package org.agileinsider.concordion.junit;
  *    limitations under the License.
  */
 
-import org.agileinsider.concordion.event.IgnoreEvent;
+import org.agileinsider.concordion.event.ScenarioIgnoredEvent;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,23 +28,23 @@ import org.mockito.runners.MockitoJUnitRunner;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class IgnoreNotifierTest {
+public class ScenarioIgnoredNotifierTest {
     private static final String IGNORED_SECTION = "An Ignored Section";
 
     @Mock
     private NotifierFactory notifierFactory;
     @Mock
     private EachTestNotifier testNotifier;
-    private IgnoreEvent anEvent;
+    private ScenarioIgnoredEvent anEvent;
 
-    private IgnoreNotifier ignoreNotifier;
+    private ScenarioNotifier ignoreNotifier;
 
     @Before
     public void setUp() throws Exception {
-        anEvent = new IgnoreEvent(IGNORED_SECTION, null);
+        anEvent = new ScenarioIgnoredEvent(IGNORED_SECTION, null);
         when(notifierFactory.createNotifier(anEvent)).thenReturn(testNotifier);
 
-        ignoreNotifier = new IgnoreNotifier(notifierFactory);
+        ignoreNotifier = new ScenarioNotifier(notifierFactory);
     }
 
     @Test

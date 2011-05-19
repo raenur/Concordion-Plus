@@ -14,7 +14,7 @@
     <p>Running a specification containing: </p>
 <pre c:execute="process(#TEXT)">
 &lt;div xmlns:cp="http://www.agileinsider.org/concordion/plus" xmlns:c="http://www.concordion.org/2007/concordion"&gt;
-    &lt;div cp:ignore="work in progress"&gt;
+    &lt;div cp:scenario="Ignored Scenario" cp:ignore="work in progress"&gt;
         &lt;span c:execute="nonExistantMethod()"&gt;Should not try to execute.&lt;/span&gt;
     &lt;/div&gt;
 &lt;/div&gt;
@@ -23,7 +23,7 @@
     <p>Should produce:</p>
 <pre c:assertEquals="getOutput()">
 &lt;div xmlns:cp="http://www.agileinsider.org/concordion/plus" xmlns:c="http://www.concordion.org/2007/concordion"&gt;
-    &lt;div cp:ignore="work in progress" class="skip"&gt;
+    &lt;div cp:scenario="Ignored Scenario" cp:ignore="work in progress" class="skip"&gt;
         &lt;span c:execute="nonExistantMethod()"&gt;Should not try to execute.&lt;/span&gt;
     &lt;/div&gt;
 &lt;/div&gt;

@@ -26,6 +26,7 @@ import org.concordion.internal.util.IOUtil;
 
 public class ScenarioExtension implements ConcordionExtension {
     public static final String SCENARIO_COMMAND = "scenario";
+    public static final String IGNORE_COMMAND = "ignore";
 
     private final ScenarioCommand scenarioCommand;
     private final ScenarioListener resultRenderer;

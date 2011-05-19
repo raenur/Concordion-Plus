@@ -23,20 +23,17 @@ public class ConcordionPlusExtension implements ConcordionExtension {
     public static final String CONCORDION_PLUS_NAMESPACE = "http://www.agileinsider.org/concordion/plus";
     public static final String CONCORDION_PLUS_CSS = "/org/agileinsider/concordion/concordion-plus.css";
 
-    private final IgnoreExtension ignoreExtension;
     private final ScenarioExtension scenarioExtension;
 
     public ConcordionPlusExtension() {
-        this(new IgnoreExtension(), new ScenarioExtension());
+        this(new ScenarioExtension());
     }
 
-    public ConcordionPlusExtension(IgnoreExtension ignoreExtension, ScenarioExtension scenarioExtension) {
-        this.ignoreExtension = ignoreExtension;
+    public ConcordionPlusExtension(ScenarioExtension scenarioExtension) {
         this.scenarioExtension = scenarioExtension;
     }
 
     public void addTo(ConcordionExtender concordionExtender) {
-        ignoreExtension.addTo(concordionExtender);
         scenarioExtension.addTo(concordionExtender);
     }
 }

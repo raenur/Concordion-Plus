@@ -16,6 +16,8 @@ package org.agileinsider.concordion.command;
  *    limitations under the License.
  */
 
+import org.agileinsider.concordion.ConcordionPlusExtension;
+import org.agileinsider.concordion.ScenarioExtension;
 import org.agileinsider.concordion.event.*;
 
 import ognl.DefaultMemberAccess;
@@ -46,6 +48,14 @@ public class ScenarioCommand extends AbstractCommand {
     @Override
     public void execute(CommandCall commandCall, Evaluator evaluator, ResultRecorder resultRecorder) {
         Object scenarioFixture = null;
+        Element element = commandCall.getElement();
+        String ignoreValue = element.getAttributeValue(ScenarioExtension.IGNORE_COMMAND, ConcordionPlusExtension.CONCORDION_PLUS_NAMESPACE);
+        if (ignoreValue != null && !ignoreValue.isEmpty())
+        {
+            resultRecorder.record(Result.IGNORED);
+            listeners.announce().ignoredReported(new ScenarioIgnoredEvent(commandCall.getExpression(), commandCall.getElement()));
+            return;
+        }
         try {
             OgnlContext permissiveContext = new OgnlContext();
             permissiveContext.setMemberAccess(new DefaultMemberAccess(true));
@@ -66,13 +76,13 @@ public class ScenarioCommand extends AbstractCommand {
 
         commandCall.getChildren().processSequentially(scenarioEvaluator, scenarioResultRecorder);
         if (scenarioResultRecorder.getExceptionCount() > 0) {
-            listeners.announce().scenarioError(new ScenarioErrorEvent(scenarioName, commandCall.getElement(), new RuntimeException("Scenario has errors.")));
+            listeners.announce().scenarioError(new ScenarioErrorEvent(scenarioName, element, new RuntimeException("Scenario has errors.")));
             resultRecorder.record(Result.EXCEPTION);
         } else if (scenarioResultRecorder.getFailureCount() > 0) {
-            listeners.announce().failureReported(new ScenarioFailureEvent(scenarioName, commandCall.getElement()));
+            listeners.announce().failureReported(new ScenarioFailureEvent(scenarioName, element));
             resultRecorder.record(Result.FAILURE);
         } else {
-            listeners.announce().successReported(new ScenarioSuccessEvent(scenarioName, commandCall.getElement()));
+            listeners.announce().successReported(new ScenarioSuccessEvent(scenarioName, element));
             resultRecorder.record(Result.SUCCESS);
         }
 

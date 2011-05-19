@@ -1,4 +1,4 @@
-package org.agileinsider.concordion.render;
+package org.agileinsider.concordion.event;
 
 /*
  * Copyright 2011 Mark Barnes (mark@agileinsider.org)
@@ -16,15 +16,18 @@ package org.agileinsider.concordion.render;
  *    limitations under the License.
  */
 
-import org.agileinsider.concordion.event.IgnoreEvent;
-import org.agileinsider.concordion.event.IgnoreListener;
-
 import org.concordion.api.Element;
 
-public class IgnoreResultRenderer implements IgnoreListener {
-    public void ignoredReported(IgnoreEvent event) {
-        Element element = event.getElement();
-        element.addStyleClass("skip").appendNonBreakingSpaceIfBlank();
+public class ScenarioIgnoredEvent extends ScenarioEvent {
+    private final Element element;
+
+    public ScenarioIgnoredEvent(String name, Element element) {
+        super(name);
+        this.element = element;
+    }
+
+    public Element getElement() {
+        return element;
     }
 
 }

@@ -19,6 +19,7 @@ package org.agileinsider.concordion.event;
 import org.concordion.api.listener.ThrowableCaughtListener;
 
 public interface ScenarioListener extends ThrowableCaughtListener {
+    void ignoredReported(ScenarioIgnoredEvent scenarioIgnoredEvent);
 
     void successReported(ScenarioSuccessEvent scenarioSuccessEvent);
 

@@ -51,6 +51,11 @@ public class ScenarioNotifier implements ScenarioListener {
         scenarioEventNotifier = null;
     }
 
+    public void ignoredReported(ScenarioIgnoredEvent event) {
+        EachTestNotifier testNotifier = notifierFactory.createNotifier(event);
+        testNotifier.fireTestIgnored();
+    }
+
     public void throwableCaught(ThrowableCaughtEvent event) {
         scenarioEventNotifier.addFailure(event.getThrowable());
     }

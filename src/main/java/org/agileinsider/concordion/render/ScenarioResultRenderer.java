@@ -34,6 +34,12 @@ public class ScenarioResultRenderer extends ThrowableRenderer implements Scenari
         addStyle(event, "error");
     }
 
+    public void ignoredReported(ScenarioIgnoredEvent event) {
+        Element element = event.getElement();
+        element.addStyleClass("skip").appendNonBreakingSpaceIfBlank();
+    }
+
+
     public void scenarioStarted(ScenarioStartEvent event) {
     }
 

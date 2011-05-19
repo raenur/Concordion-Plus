@@ -14,7 +14,7 @@
     <p>Running a specification containing: </p>
 <pre c:execute="process(#TEXT)">
 &lt;div xmlns:cp="http://www.agileinsider.org/concordion/plus" xmlns:c="http://www.concordion.org/2007/concordion"&gt;
-    &lt;div cp:ignore="work in progress"&gt;
+    &lt;div cp:scenario="Ignored Scenario" cp:ignore="work in progress"&gt;
         &lt;span c:execute="nonExistantMethod()"&gt;Should not try to execute.&lt;/span&gt;
     &lt;/div&gt;
     &lt;div cp:scenario="Passing Scenario"&gt;Inside Scenario&lt;/div&gt;
@@ -34,7 +34,7 @@
             <th>Result</th>
         </tr>
         <tr>
-            <td c:assertEquals="outputContains(#TEXT)">&lt;div cp:ignore="work in progress" class="skip"&gt;</td>
+            <td c:assertEquals="outputContains(#TEXT)">&lt;div cp:scenario="Ignored Scenario" cp:ignore="work in progress" class="skip"&gt;</td>
         </tr>
         <tr>
             <td c:assertEquals="outputContains(#TEXT)">&lt;div cp:scenario="Passing Scenario" class="pass"&gt;</td>

@@ -28,8 +28,6 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class ConcordionPlusExtensionTest {
     @Mock
-    private IgnoreExtension ignoreExtension;
-    @Mock
     private ScenarioExtension scenarioExtension;
     @Mock
     private ConcordionExtender concordionExtender;
@@ -38,14 +36,7 @@ public class ConcordionPlusExtensionTest {
 
     @Before
     public void setUp() throws Exception {
-        concordionPlusExtension = new ConcordionPlusExtension(ignoreExtension, scenarioExtension);
-    }
-
-    @Test
-    public void shouldRegisterIgnoreExtension() throws Exception {
-        concordionPlusExtension.addTo(concordionExtender);
-
-        verify(ignoreExtension).addTo(concordionExtender);
+        concordionPlusExtension = new ConcordionPlusExtension(scenarioExtension);
     }
 
     @Test
